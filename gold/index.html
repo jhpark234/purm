@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>인공지능 손금 테스트</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Gothic&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light nav-distance">
+        <a class="navbar-brand" href="#">손금</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">조코딩의 동물상 테스트 바로가기</a>
+                </li>
+               
+            </ul>
+            <span class="navbar-text">
+                Navbar text with an inline element
+            </span>
+        </div>
+    </nav>
+
+    <section class="section">
+        <h1 class="title">인공지능 으로 보는 손금</h1>
+        <h2 class="subtitle">내손금 머선일이고?</h2>
+    </section>
+
+    <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <div class="container file-upload">
+        <div class="image-upload-wrap">
+            <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+            <div class="drag-text">
+                <img src="image/pinger.com.png" class="upload">
+                <h3 Class="Upload-text">손바닥 사진을 올려 놓거나 눌러서 업로드!</h3>
+
+            </div>
+        </div>
+        <div class="file-upload-content">
+            <img class="file-upload-image" id="face-image" src="#" alt="your image" />
+            <img class="result-image" style src=""> 
+            <p class="result-title"></p>
+            <p1 class="result-massage"></p1>
+            <div id="label-container"></div>
+            <div class="image-title-wrap">
+                <div id="loading">
+                    <img SRC="https://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile1.uf.tistory.com%2Fimage%2F9950163C5AFE32810A7310">
+                    <p class="text-center">인공지능 점술사가 손금을 분석중입니다.</p>
+                </div>
+
+                <button type="button" onclick="removeUpload()" class="remove-image">Remove
+                    <span class="image-title">Uploaded Image</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="webcam-container"></div>
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+         *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document,
+                s = d.createElement('script');
+            s.src = 'https://rfcal.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the
+        <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+    </noscript>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+    <script>
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('.image-upload-wrap').hide();
+                    $('.file-upload-image').attr('src', e.target.result);
+                    $('.file-upload-content').show();
+                    $('.image-title').html(input.files[0].name);
+                };
+                reader.readAsDataURL(input.files[0]);
+                init().then(function() {
+                    console.log("hello");
+                    predict();
+                });
+                //predict();
+            } else {
+                removeUpload();
+            }
+        }
+
+        function removeUpload() {
+            $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $('.file-upload-content').hide();
+            $('.label-Container').hide();
+            $('.image-upload-wrap').show();
+        }
+        $('.image-upload-wrap').bind('dragover', function() {
+            $('.image-upload-wrap').addClass('image-dropping');
+        });
+        $('.image-upload-wrap').bind('dragleave', function() {
+            $('.image-upload-wrap').removeClass('image-dropping');
+        });
+    </script>
+    <script type="text/javascript">
+        // More API functions here:
+        // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+        // the link to your model provided by Teachable Machine export panel
+        const URL = "https://teachablemachine.withgoogle.com/models/CvtLamRoT/";
+        let model, webcam, labelContainer, maxPredictions;
+        // Load the image model and setup the webcam
+        async function init() {
+            const modelURL = URL + "model.json";
+            const metadataURL = URL + "metadata.json";
+            // load the model and metadata
+            // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+            // or files from your local hard drive
+            // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+            model = await tmImage.load(modelURL, metadataURL);
+            maxPredictions = model.getTotalClasses();
+            // append elements to the DOM
+            labelContainer = document.getElementById("label-container");
+            for (let i = 0; i < maxPredictions; i++) { // and class labels
+                labelContainer.appendChild(document.createElement("div"));
+            }
+        }
+        // run the webcam image through the image model
+        async function predict() {
+            // predict can take in an image, video or canvas html element
+            var image = document.getElementById("face-image")
+            const prediction = await model.predict(image, false);
+            prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+            console.log(prediction[0].className);
+            var resulttitle;
+            switch (prediction[0].className) {
+                case "gold":
+                    resultimage = "gold1"
+                    resulttitle = "일획천금 황금 손금"
+                    var resultmassage
+
+                    function RandomArr(d) {
+                        for (var c = d.length - 1; c > 0; c--) {
+                            var b = Math.floor(Math.random() * (c + 1));
+                            var a = d[c];
+                            d[c] = d[b];
+                            d[b] = a;
+                        }
+                        return a
+                    }
+                    resultmassage = ['행운의 금손을 타고 나셧습니다. 로또 사시길 추천 드립니다.', '상위 1%프로의 손금을 타고 나셧으나 생활 습관의 나쁘고 생각이 바르지 않으면 손금이 변할 운명이니 조심하시기 바랍니다.', '결혼 운이 좋아 결혼으로 인생이 변할수도 있는 운을 갖은 손금입니다.', '부자운은 타고 났으며 재물운이 항상 따라다니는 손금입니다.', '말년에 로또당첨 되실 팔자를 타고 나셧군요.. 그러나 말년이라는것!', '정계에 몸을 담고 있거나 큰일을 하고있는 사람의 손금으로 보여 지며 전세계 역대 대통령들이 가지고 있는 M자형 손금과 흡사합니다.']
+                    resultmassage = RandomArr(resultmassage);
+                    // code block
+                    break;
+                case "silver":
+                    resultimage = "silver1"
+                    resulttitle = "평범한 일상의 민간인 손금"
+                    var resultmassage
+
+                    function RandomArr(d) {
+                        for (var c = d.length - 1; c > 0; c--) {
+                            var b = Math.floor(Math.random() * (c + 1));
+                            var a = d[c];
+                            d[c] = d[b];
+                            d[b] = a;
+                        }
+                        return a
+                    }
+                    resultmassage = ['재능은 뛰어나며 혼자힘으로 성공할수 있으나 호불하고 강하고 기가 강해 인간성이 결여될수 있으니 인간관계에 최선을 다하시기 바랍니다.', '사업을 하시면 큰낭패를 보실수 있습니다. 사업을 돕는 손들이 부족한 관계로 사업과는 인연이 없습니다.', '가방끈이 짧더라도 혼자 성공할수 있는 자수성가형 손금입니다.', '단한번의 감정조절의 실패로 인생존망의 길로 갈수 있으는 타인관계에 힘쓰셔야 하겠습니다.', '집착이 강하고 소유욕이 강한 성격의 소유자이십니다. 지나친 소유욕은 화를 부르니 적당한 선에서 타협할수 있는 마인드가 필요해 보입니다.', '연예계에 몸담고 있거나 앞으로 연예계 쪽으로 진출할 가능성이 많은  손금으로 보여지니 톱스타가 되시면 싸인한장 부탁드립니다.', '활동성이 뛰어나고 주위의 이성에게 매력이 넘치니 이를 어찌할꼬! ']
+                    resultmassage = RandomArr(resultmassage);
+                    // code block
+                    break;
+                case "dong":
+                    resultimage = "dong1"
+                    resulttitle = "잘못하면 흙수저로 평생 살아야할 손금"
+                    var resultmassage
+
+                    function RandomArr(d) {
+                        for (var c = d.length - 1; c > 0; c--) {
+                            var b = Math.floor(Math.random() * (c + 1));
+                            var a = d[c];
+                            d[c] = d[b];
+                            d[b] = a;
+                        }
+                        return a
+                    }
+                    resultmassage = ['재물운이 없는 손금 입니다. 절대로 도박 주식 선물  투자하지 마세요!', '착실하게 살면 행운이 따라올수 있으니 힘내시기 바랍니다.', '슬픈경험이 많은 손금입니다. 쓸데없는 걱정을 많이하는 타입이며 소심한 성격의 소유자이십니다.', '재물운이나 명예운이 크게 없고 질환에 오히려 조심을해야 할것 같습니다.', '손금에 잔선이 많은것으로 보아 말년에 건강이 악화 될수도 있으니 항상 건강에 유의하시기 바랍니다.', '자기가 옳다면 뭐든지 자기 방식대로 행하는 성격의 소유자이 시군요 때론... 타인의 말도 경청해주시길 바랍니다.', '매사에 민감하고 스트레스를 많이 받는 성격의 소유자이십니다. 보통 마른 체격의 소유자분들이 많으십니다', '인내심이 깊지 않고 직장상활에 있어 지루함을 많이 느낄수 있어 이직을 자주하시는 스타일입니다. 어느정도 한곳에 정착을하여 목표를 정해야지만 말년에 행복한 삶을 살수있을것으로 보입니다.']
+                    resultmassage = RandomArr(resultmassage);
+                    // code block
+                    break;
+                
+            }
+            $('.result-image').attr("src","SECimage/" + resultimage + ".jpg");
+            $('.result-title').html(resulttitle);
+            $('.result-massage').html(resultmassage);
+            $("#loading").css("visibility", "hidden");
+            for (let i = 0; i < maxPredictions; i++) {
+                const classPrediction = prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+                labelContainer.childNodes[i].innerHTML = classPrediction;
+            }
+        }
+    </script>
+
+</body>
+<!-- Copyright (c) 2020 by Aaron Vanston (https://codepen.io/aaronvanston/pen/yNYOXR)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ -->
+
+</html>
