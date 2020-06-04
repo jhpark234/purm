@@ -12,10 +12,13 @@
     <title>인공지능 손금 테스트</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5ed97e070962c0ce"></script>
+
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light nav-distance">
+    <nav class="navbar navbar-expand-lg navbar-light nav-distance">
         <a class="navbar-brand" href="#">손금</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -30,7 +33,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">조코딩의 동물상 테스트 바로가기</a>
                 </li>
-               
+
             </ul>
             <span class="navbar-text">
                 Navbar text with an inline element
@@ -55,18 +58,22 @@
         </div>
         <div class="file-upload-content">
             <img class="file-upload-image" id="face-image" src="#" alt="your image" />
-            <img class="result-image" style src=""> 
+            <img class="result-image" style src="">
             <p class="result-title"></p>
             <p1 class="result-massage"></p1>
-            <div id="label-container"></div>
+            <div id="label-container" style="display:none"></div>
+
+            <!-- Go to www.addthis.com/dashboard to customize your tools -->
+            <div class="addthis_inline_share_toolbox"></div>
+
             <div class="image-title-wrap">
                 <div id="loading">
                     <img SRC="https://img1.daumcdn.net/thumb/R1920x0/?fname=http%3A%2F%2Fcfile1.uf.tistory.com%2Fimage%2F9950163C5AFE32810A7310">
                     <p class="text-center">인공지능 점술사가 손금을 분석중입니다.</p>
                 </div>
 
-                <button type="button" onclick="removeUpload()" class="remove-image">Remove
-                    <span class="image-title">Uploaded Image</span>
+                <button type="button" class="upload-button" onClick="location.href='index.html'">
+                    <span class="button-text">다른 사진으로 재시도</span>
                 </button>
             </div>
         </div>
@@ -155,7 +162,7 @@
             // append elements to the DOM
             labelContainer = document.getElementById("label-container");
             for (let i = 0; i < maxPredictions; i++) { // and class labels
-                labelContainer.appendChild(document.createElement("div"));
+                labelContainer.appendChild(document.createElement("div"))
             }
         }
         // run the webcam image through the image model
@@ -221,9 +228,8 @@
                     resultmassage = RandomArr(resultmassage);
                     // code block
                     break;
-                
             }
-            $('.result-image').attr("src","SECimage/" + resultimage + ".jpg");
+            $('.result-image').attr("src", "SECimage/" + resultimage + ".jpg");
             $('.result-title').html(resulttitle);
             $('.result-massage').html(resultmassage);
             $("#loading").css("visibility", "hidden");

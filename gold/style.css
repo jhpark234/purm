@@ -176,6 +176,25 @@ body {
     margin:0 auto;
     
 }
+
+.upload-button {
+    border-radius: 30PX;
+
+    border: solid 1.5px orange;
+    background-color: orange;
+    
+}
+
+.button-text {
+   display: block;
+   font-size:1.5rem;
+   text-align: center;
+   color: #ffffff;
+   padding: 4px 15px;
+    
+}
+
+
 .result-title{
     font-size: 2rem; 
     display: block;
@@ -201,6 +220,13 @@ p{
 
 }
     
+
+.at-mobile{
+    margin: center;
+
+    
+}
+
 
 /* On screens that are 600px or less, set the background color to olive */
 @media screen and (max-width: 600px) {
